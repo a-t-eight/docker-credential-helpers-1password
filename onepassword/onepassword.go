@@ -71,9 +71,6 @@ func (h OnePassword) Add(creds *credentials.Credentials) error {
 	if creds == nil {
 		return errors.New("missing credentials")
 	}
-	if ok, err := creds.IsValid(); !ok {
-		return err
-	}
 	if err := h.checkInitialized(); err != nil {
 		return err
 	}
