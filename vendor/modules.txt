@@ -1,9 +1,56 @@
+# github.com/1Password/connect-sdk-go v1.5.3
+## explicit; go 1.20
+github.com/1Password/connect-sdk-go/connect
+github.com/1Password/connect-sdk-go/onepassword
 # github.com/danieljoos/wincred v1.2.3
 ## explicit; go 1.18
 github.com/danieljoos/wincred
+# github.com/docker/docker-credential-helpers v0.9.4
+## explicit; go 1.21
+github.com/docker/docker-credential-helpers/credentials
+github.com/docker/docker-credential-helpers/osxkeychain
+github.com/docker/docker-credential-helpers/pass
+github.com/docker/docker-credential-helpers/registryurl
+github.com/docker/docker-credential-helpers/secretservice
+github.com/docker/docker-credential-helpers/wincred
 # github.com/keybase/go-keychain v0.0.1
 ## explicit; go 1.21
 github.com/keybase/go-keychain
+# github.com/opentracing/opentracing-go v1.2.0
+## explicit; go 1.14
+github.com/opentracing/opentracing-go
+github.com/opentracing/opentracing-go/ext
+github.com/opentracing/opentracing-go/log
+# github.com/pkg/errors v0.9.1
+## explicit
+github.com/pkg/errors
+# github.com/uber/jaeger-client-go v2.30.0+incompatible
+## explicit
+github.com/uber/jaeger-client-go
+github.com/uber/jaeger-client-go/config
+github.com/uber/jaeger-client-go/internal/baggage
+github.com/uber/jaeger-client-go/internal/baggage/remote
+github.com/uber/jaeger-client-go/internal/reporterstats
+github.com/uber/jaeger-client-go/internal/spanlog
+github.com/uber/jaeger-client-go/internal/throttler
+github.com/uber/jaeger-client-go/internal/throttler/remote
+github.com/uber/jaeger-client-go/log
+github.com/uber/jaeger-client-go/rpcmetrics
+github.com/uber/jaeger-client-go/thrift
+github.com/uber/jaeger-client-go/thrift-gen/agent
+github.com/uber/jaeger-client-go/thrift-gen/baggage
+github.com/uber/jaeger-client-go/thrift-gen/jaeger
+github.com/uber/jaeger-client-go/thrift-gen/sampling
+github.com/uber/jaeger-client-go/thrift-gen/zipkincore
+github.com/uber/jaeger-client-go/transport
+github.com/uber/jaeger-client-go/utils
+github.com/uber/jaeger-client-go/zipkin
+# github.com/uber/jaeger-lib v2.4.1+incompatible
+## explicit
+github.com/uber/jaeger-lib/metrics
+# go.uber.org/atomic v1.9.0
+## explicit; go 1.13
+go.uber.org/atomic
 # golang.org/x/sys v0.20.0
 ## explicit; go 1.18
 golang.org/x/sys/windows

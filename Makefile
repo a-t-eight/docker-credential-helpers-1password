@@ -42,11 +42,12 @@ build-%: # build, can be one of build-osxkeychain build-pass build-secretservice
 	go build -trimpath -ldflags="$(GO_LDFLAGS) -X ${GO_PKG}/credentials.Name=docker-credential-$*" -o "$(DESTDIR)/docker-credential-$*" ./$*/cmd/
 
 # aliases for build-* targets
-.PHONY: osxkeychain secretservice pass wincred
+.PHONY: osxkeychain secretservice pass wincred onepassword
 osxkeychain: build-osxkeychain
 secretservice: build-secretservice
 pass: build-pass
 wincred: build-wincred
+onepassword: build-onepassword
 
 .PHONY: cross
 cross: # cross build all supported credential helpers
