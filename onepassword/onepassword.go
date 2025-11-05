@@ -294,11 +294,23 @@ func (h OnePassword) runOP(args ...string) ([]byte, error) {
 	cmd.Stdout = &out
 	cmd.Stderr = &errb
 	if err := cmd.Run(); err != nil {
-		msg := strings.TrimSpace(errb.String())
-		if msg == "" {
-			msg = err.Error()
-		}
-		return nil, fmt.Errorf("op %s: %s", strings.Join(args, " "), msg)
+//		msg := strings.TrimSpace(errb.String())
+//		if msg == "" {
+//			msg = err.Error()
+//		}
+//		return nil, fmt.Errorf("op %s: %s", strings.Join(args, " "), msg)
+        msg := strings.TrimSpace(errb.String())
+        if msg == "" { msg = err.Error() }
+        // redact password=… in args to avoid secret leakage
+        safe := make([]string, len(args))
+        for i, a := range args {
+            if strings.HasPrefix(a, "password=") {
+                safe[i] = "password=****"
+            } else {
+                safe[i] = a
+            }
+        }
+        return nil, fmt.Errorf("op %s: %s", strings.Join(safe, " "), msg)
 	}
 	return out.Bytes(), nil
 }

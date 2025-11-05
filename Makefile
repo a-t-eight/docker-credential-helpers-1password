@@ -9,6 +9,9 @@ BUILDX_CMD ?= docker buildx
 DESTDIR ?= ./bin/build
 COVERAGEDIR ?= ./bin/coverage
 
+# Prevent accidental updates to go.sum during builds
+export GOFLAGS ?= -mod=readonly
+
 # 10.11 is the minimum supported version for osxkeychain
 export MACOSX_DEPLOYMENT_TARGET = 10.11
 ifeq "$(shell go env GOOS)" "darwin"
@@ -36,6 +39,11 @@ all: cross
 .PHONY: clean
 clean:
 	rm -rf bin
+
+.PHONY: tidy-check
+tidy-check:
+	@echo "Checking that go.sum is unchanged..."
+	@git diff --quiet -- go.sum || (echo "ERROR: go.sum changed. Run 'go mod tidy' intentionally if needed."; exit 1)
 
 .PHONY: build-%
 build-%: # build, can be one of build-osxkeychain build-pass build-secretservice build-wincred

@@ -16,6 +16,7 @@ on:
 env:
   DESTDIR: ./bin
   GO_VERSION: 1.25.2
+  GOFLAGS: -mod=readonly
 
 jobs:
   validate:
