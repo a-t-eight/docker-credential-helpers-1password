@@ -9,6 +9,14 @@ BUILDX_CMD ?= docker buildx
 DESTDIR ?= ./bin/build
 COVERAGEDIR ?= ./bin/coverage
 
+# --- onepasswordconnect helper registration + alias mapping ---
+# Register the new helper's package dir (if you keep a HELPERS list, append here)
+HELPERS += onepasswordconnect
+
+# Map package dir -> binary suffix (dash form)
+HELPER_BIN_onepasswordconnect := onepassword-connect
+# ----------------------------------------------------------------
+
 # Prevent accidental updates to go.sum during builds
 export GOFLAGS ?= -mod=readonly
 
@@ -46,16 +54,25 @@ tidy-check:
 	@git diff --quiet -- go.sum || (echo "ERROR: go.sum changed. Run 'go mod tidy' intentionally if needed."; exit 1)
 
 .PHONY: build-%
+#build-%: # build, can be one of build-osxkeychain build-pass build-secretservice build-wincred
+#	go build -trimpath -ldflags="$(GO_LDFLAGS) -X ${GO_PKG}/credentials.Name=docker-credential-$*" -o "$(DESTDIR)/docker-credential-$*" ./$*/cmd/
 build-%: # build, can be one of build-osxkeychain build-pass build-secretservice build-wincred
-	go build -trimpath -ldflags="$(GO_LDFLAGS) -X ${GO_PKG}/credentials.Name=docker-credential-$*" -o "$(DESTDIR)/docker-credential-$*" ./$*/cmd/
+	@pkg="$*"; bin='$(HELPER_BIN_$*)'; \
+	[ -n "$$bin" ] || bin="$$pkg"; \
+	echo ">> building $$pkg -> $(DESTDIR)/docker-credential-$$bin"; \
+	mkdir -p "$(DESTDIR)"; \
+	GOOS="$(GOOS)" GOARCH="$(GOARCH)" CGO_ENABLED="$${CGO_ENABLED:-0}" \
+	go build -trimpath -ldflags="$(GO_LDFLAGS) -X ${GO_PKG}/credentials.Name=docker-credential-$$bin" \
+		-o "$(DESTDIR)/docker-credential-$$bin" ./$$pkg/cmd/
 
 # aliases for build-* targets
-.PHONY: osxkeychain secretservice pass wincred onepassword
+.PHONY: osxkeychain secretservice pass wincred onepassword onepassword-connect
 osxkeychain: build-osxkeychain
 secretservice: build-secretservice
 pass: build-pass
 wincred: build-wincred
 onepassword: build-onepassword
+onepassword-connect: build-onepasswordconnect
 
 .PHONY: cross
 cross: # cross build all supported credential helpers
