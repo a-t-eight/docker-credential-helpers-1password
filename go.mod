@@ -14,3 +14,6 @@ require (
 )
 
 require golang.org/x/sys v0.20.0 // indirect
+
+// Build module this module from my 1password fork/branch instead of upstream, this retains the official upstream docker-credential-helper module
+replace github.com/docker/docker-credential-helpers => github.com/a-t-eight/docker-credential-helpers-1password v0.0.0-20251105135043-76b3860abcf6
